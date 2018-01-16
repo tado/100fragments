@@ -1,8 +1,7 @@
 uniform float time;
-uniform vec2 resolution;
-varying vec2 v_texcoord;
 void main(void) {
-    vec2 uv = v_texcoord;
-    float v = pow(sin(time * 40.0 + sin(time) * 4.0), 2.0);
-    gl_FragColor = vec4(v, v, v, 1.0);
+    float r = abs(pow(sin(time * 30.0 + sin(time) * 3.0), 3.0));
+    float g = abs(pow(sin(time * 32.0 + sin(time) * 3.0), 3.0));
+    float b = abs(pow(cos(time * 30.0 + sin(time) * 3.0), 3.0));
+    gl_FragColor = vec4(r, g, b, 1.0);
 }
