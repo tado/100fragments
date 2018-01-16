@@ -7,9 +7,9 @@ float random (vec2 st) {
 }
 
 void main() {
-  vec2 st = vec2(gl_FragCoord.x/resolution.x, gl_FragCoord.y/resolution.x) ;
+  vec2 st = vec2(gl_FragCoord.x / resolution.x, gl_FragCoord.y/resolution.x) ;
   st *= 40.0;
   vec2 ipos = floor(st);
-  vec3 color = vec3(random(ipos + time ));
+  vec3 color = vec3(random(ipos + time));
   gl_FragColor = vec4(color,1.0);
 }
