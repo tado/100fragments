@@ -10,7 +10,7 @@ void main() {
     vec2 st = vec2(gl_FragCoord.x/resolution.x, gl_FragCoord.y/resolution.x) ;
     st *= 40.0;
     vec2 ipos = floor(st);
-    int speed = 15;
-    vec3 color = vec3(random(ipos * int(time * speed)), random(ipos * int(time * speed + 1)), random(ipos * int(time * speed + 2)));
+    float speed = 10.0;
+    vec3 color = vec3(random(ipos * vec2(time * speed)), random(ipos * vec2(time * speed + 1.0)), random(ipos * vec2(time * speed + 2.0)));
     gl_FragColor = vec4(color,1.0);
 }
