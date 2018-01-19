@@ -1,6 +1,5 @@
 uniform float time;
 uniform vec2 resolution;
-varying vec2 v_texcoord;
 #define TWO_PI 6.28318530718
 
 vec3 hsb2rgb(vec3 c){
@@ -10,7 +9,7 @@ vec3 hsb2rgb(vec3 c){
 }
 
 void main(){
-    vec2 st = v_texcoord.xy;
+    vec2 st = gl_FragCoord.xy / resolution.xy;
     vec2 toCenter = vec2(0.5, 0.5)-st;
     float angle = atan(toCenter.y, toCenter.x);
     float radius = length(toCenter) * 2.0;

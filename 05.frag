@@ -1,5 +1,6 @@
 uniform float time;
 uniform vec2 resolution;
+
 void main() {
     float r, g, b;
     for(float i = 1.0; i < 5.0; i++){

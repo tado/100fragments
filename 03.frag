@@ -1,5 +1,6 @@
 uniform float time;
 uniform vec2 resolution;
+
 void main() {
     vec2 m = vec2(sin(time * 1.0) * 0.4 + 0.5, (cos(time*1.2) * 0.5 + 0.5) * (resolution.y / resolution.x));
     vec2 p = gl_FragCoord.xy / resolution.x;

@@ -1,6 +1,5 @@
 uniform float time;
 uniform vec2 resolution;
-varying vec2 v_texcoord;
 
 float random (vec2 st) {
     return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
