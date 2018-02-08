@@ -22,8 +22,8 @@ float noise(vec3 p){
 
 void main(void) {
     vec2 st = gl_FragCoord.xy / resolution.xy;
-    vec2 pos = vec2(st) * vec2(400.0, 20.0);
-    float speed = 8.0;
+    vec2 pos = vec2(st) * vec2(100.0, 4.0);
+    float speed = 100.0;
     float brightness = 1.2;
     float r = noise(vec3(pos.x, pos.y, time * speed)) * brightness;
     float g = noise(vec3(pos.x, pos.y + 0.2, time * speed + 200.0)) * brightness;

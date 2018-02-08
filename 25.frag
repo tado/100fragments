@@ -22,11 +22,11 @@ float noise(vec3 p){
 
 void main(void) {
     vec2 st = gl_FragCoord.xy / resolution.xy;
-    vec2 pos = vec2(st) * vec2(10.0, 200.0);
-    float speed = 8.0;
-    float brightness = 1.2;
-    float r = noise(vec3(pos.x, pos.y, time * speed)) * brightness;
-    float g = noise(vec3(pos.x, pos.y + 0.2, time * speed + 200.0)) * brightness;
-    float b = noise(vec3(pos.x, pos.y + 0.4, time * speed + 800.0)) * brightness;
+    vec2 pos = vec2(st) * vec2(0.1, 120.0);
+    float speed = 20.0;
+    float brightness = 1.4;
+    float r = abs(noise(vec3(pos.x, pos.y, time * speed)) * brightness);
+    float g = abs(noise(vec3(pos.x, pos.y + 0.2, time * speed + 10.0)) * brightness);
+    float b = abs(noise(vec3(pos.x, pos.y + 0.4, time * speed + 20.0)) * brightness);
     gl_FragColor = vec4(vec3(r, g, b), 1.0);
 }
