@@ -1,7 +1,7 @@
 uniform float time;
 uniform vec2 resolution;
 
-void main(void){
+void main(){
     vec2 m;
     float t;
     for(float i = 0.0; i < 5.0; i+=1.0){
