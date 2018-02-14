@@ -35,15 +35,15 @@ void main() {
     st.x *= resolution.x/resolution.y;
     vec2 pos = st.yx*vec2(2.0,3.0);
     float pattern = 1.0;
-    pos = rotate2d( noise(pos + time * 1.0) ) * pos * 2.0;
+    pos = rotate2d( noise(pos + time * 1.0) ) * pos;
     pattern = lines(pos,.5);
 
-    vec2 pos2 = st.yx*vec2(1.0,3.0);
-    pos2 = rotate2d( noise(pos2 + time + 500.0) ) * pos2 * 3.0;
+    vec2 pos2 = st.yx*vec2(2.0,3.0);
+    pos2 = rotate2d( noise(pos2 + time + 500.0) ) * pos2;
     float pattern2 = lines(pos2, 0.2);
 
-    vec2 pos3 = st.yx*vec2(1.5, 3.5);
-    pos2 = rotate2d( noise(pos3 + time + 1000.0) ) * pos3 * 5.0;
+    vec2 pos3 = st.yx*vec2(2.0, 3.0);
+    pos3 = rotate2d( noise(pos3 + time + 1000.0) ) * pos3;
     float pattern3 = lines(pos3, 0.2);
     gl_FragColor = vec4(vec3(pattern, pattern2, pattern3),1.0);
 }

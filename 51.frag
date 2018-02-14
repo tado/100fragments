@@ -33,17 +33,8 @@ float lines(in vec2 pos, float b){
 void main() {
     vec2 st = gl_FragCoord.xy/resolution.xy;
     st.x *= resolution.x/resolution.y;
-    vec2 pos = st.xy*vec2(5.0,1.0);
-    float pattern = 1.0;
-    pos = rotate2d( noise(pos + time * 1.0) ) * pos * 2.0;
-    pattern = lines(pos,.5);
-
-    vec2 pos2 = st.yx*vec2(4.0,1.0);
-    pos2 = rotate2d( noise(pos2 + time * 0.3) ) * pos2 * 2.0;
-    float pattern2 = lines(pos2, 0.2);
-
-    vec2 pos3 = st.yx*vec2(8.0, 0.8);
-    pos2 = rotate2d( noise(pos3 + time * 0.5) ) * pos3 * 2.0;
-    float pattern3 = lines(pos3, 0.2);
-    gl_FragColor = vec4(vec3(pattern, pattern2, pattern3),1.0);
+    vec2 pos = st.xy*vec2(5.0,5.0);
+    pos = rotate2d(noise(pos + time * 1.0) * 2.0) * pos;
+    float pattern = lines(pos, 0.8);
+    gl_FragColor = vec4(vec3(pattern),1.0);
 }
