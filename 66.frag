@@ -1,8 +1,7 @@
 uniform float time;
 uniform vec2 resolution;
 
-void main(void)
-{
+void main(void){
     vec3 c;
     float l;
     float z = time * 10.0;
