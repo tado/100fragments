@@ -1,11 +1,11 @@
 uniform float time;
 uniform vec2 resolution;
 
-void main(void){
+void main(){
     vec3 c;
     float l;
     float z = time;
-    for(int i=0; i<3; i++) {
+    for(int i = 0; i < 3; i++) {
         vec2 uv = gl_FragCoord.xy/resolution.xy;
         vec2 p = uv;
         p -= 0.5;
