@@ -8,8 +8,9 @@ vec2 random2( vec2 p ) {
 void main() {
     vec2 st = gl_FragCoord.xy/resolution.xy;
     st.x *= resolution.x/resolution.y;
+    st.x -= 1.0;
     vec3 color = vec3(.0);
-    st *= 3.;
+    st *= sin(time * 2.0) * 2.0 + 3.0;
     vec2 i_st = floor(st);
     vec2 f_st = fract(st);
     float m_dist = 1.;
@@ -24,7 +25,7 @@ void main() {
         }
     }
     color += m_dist;
-    color += 1.0 - step(.02, m_dist) * vec3(0.0, 1.0, 4.0);
+    color += 1.0 - step(.04, m_dist) * vec3(0.0, 1.0, 4.0);
     color -= mod(sin(4.0 * m_dist) * 1.0, 0.4) * vec3(1.0, 1.0, 3.0);
-    gl_FragColor = vec4(color,1.0);
+    gl_FragColor = vec4(color, 1.0);
 }
