@@ -1,3 +1,5 @@
+#version 120
+
 uniform float time;
 
 void main(void) {

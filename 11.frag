@@ -1,3 +1,5 @@
+#version 120
+
 uniform float time;
 uniform vec2 resolution;
 #define TWO_PI 6.28318530718
