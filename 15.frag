@@ -1,7 +1,6 @@
-#version 120
-
 uniform float time;
 uniform vec2 resolution;
+out vec4 fragColor;
 
 vec4 mod289(vec4 x){return x - floor(x * (1.0 / 289.0)) * 289.0;}
 vec4 perm(vec4 x){return mod289(((x * 34.0) + 1.0) * x);}
@@ -28,5 +27,6 @@ void main(void) {
     float r = mod(noise(vec3(pos.x, pos.y, time * 0.2)) * 200.0, 1.0);
     float g = mod(noise(vec3(pos.x, pos.y + 0.2, time * 0.22 + 200.0)) * 100.0, 1.0);
     float b = mod(noise(vec3(pos.x, pos.y + 0.4, time * 0.24 + 200.0)) * 100.0, 1.0);
-    gl_FragColor = vec4(vec3(r, g, b), 1.0);
+    vec4 color = vec4(vec3(r, g, b), 1.0);
+    fragColor = TDOutputSwizzle(color);
 }
