@@ -1,7 +1,6 @@
-#version 120
-
 uniform float time;
 uniform vec2 resolution;
+out vec4 fragColor;
 
 void main(void){
     vec2 st = gl_FragCoord.xy / resolution.xy;
@@ -12,5 +11,6 @@ void main(void){
         color += (1.0 - vec3(pow(abs(st.y), 0.03)));
     }
     color = vec3(color.r * 2.0, color.g * 0.9, color.b * 0.0);
-    gl_FragColor = vec4(color, 1.0);
+    vec4 fcol = vec4(color, 1.0);
+    fragColor = TDOutputSwizzle(fcol);
 }

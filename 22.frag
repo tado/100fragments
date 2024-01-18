@@ -1,11 +1,14 @@
-#version 120
-
 uniform float time;
 uniform vec2 resolution;
+out vec4 fragColor;
 
-vec4 mod289(vec4 x){return x - floor(x * (1.0 / 289.0)) * 289.0;}
-vec4 perm(vec4 x){return mod289(((x * 34.0) + 1.0) * x);}
-float noise(vec3 p){
+vec4 mod289(vec4 x) {
+    return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+vec4 perm(vec4 x) {
+    return mod289(((x * 34.0) + 1.0) * x);
+}
+float noise(vec3 p) {
     vec3 a = floor(p);
     vec3 d = p - a;
     d = d * d * (3.0 - 2.0 * d);
@@ -30,5 +33,6 @@ void main(void) {
     float r = noise(vec3(pos.x, pos.y, time * speed)) * brightness;
     float g = noise(vec3(pos.x, pos.y + 0.2, time * speed + 200.0)) * brightness;
     float b = noise(vec3(pos.x, pos.y + 0.4, time * speed + 800.0)) * brightness;
-    gl_FragColor = vec4(vec3(r, g, b), 1.0);
+    vec4 color = vec4(vec3(r, g, b), 1.0);
+    fragColor = TDOutputSwizzle(color);
 }

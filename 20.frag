@@ -1,7 +1,6 @@
-#version 120
-
 uniform float time;
 uniform vec2 resolution;
+out vec4 fragColor;
 
 float rand(float n){return fract(sin(n) * 43758.5453123);}
 
@@ -19,5 +18,6 @@ void main(void){
                 + f4 * vec3(1.0, 0.5, 0.0)
                 ;
     }
-    gl_FragColor = vec4(color, 1.0);
+    vec4 fcol = vec4(color, 1.0);
+    fragColor = TDOutputSwizzle(fcol);
 }
