@@ -1,7 +1,6 @@
-#version 120
-
 uniform float time;
 uniform vec2 resolution;
+out vec4 fragColor;
 
 float random (in vec2 st) {
     return fract(sin(dot(st.xy,
@@ -47,5 +46,6 @@ void main() {
     vec2 pos3 = st.yx*vec2(2.0, 3.0);
     pos3 = rotate2d( noise(pos3 + time + 1000.0) ) * pos3;
     float pattern3 = lines(pos3, 0.2);
-    gl_FragColor = vec4(vec3(pattern, pattern2, pattern3),1.0);
+    vec4 color = vec4(vec3(pattern, pattern2, pattern3),1.0);
+    fragColor = TDOutputSwizzle(color);
 }

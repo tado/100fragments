@@ -3,7 +3,7 @@ uniform vec2 resolution;
 out vec4 fragColor;
 
 void main(void){
-    vec2 m;
+    vec2 m = vec2(0.0);
     float t = 0.0;
     for(float i = 0.0; i < 4.0; i+=1.0){
         m = vec2(sin(time * 5.0 * i) * 0.9, cos(time * 5.2 + i) * 0.8);
