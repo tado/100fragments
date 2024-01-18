@@ -1,7 +1,6 @@
-#version 120
-
 uniform float time;
 uniform vec2 resolution;
+out vec4 fragColor;
 
 float random (in vec2 st) {
     return fract(sin(dot(st.xy,
@@ -27,8 +26,8 @@ float noise (in vec2 st) {
 #define OCTAVES 4
 float fbm (in vec2 st) {
     float value = 0.0;
-    float amplitude = .5;
-    float frequency = 0.;
+    float amplitude = 0.5;
+    float frequency = 0.0;
     for (int i = 0; i < OCTAVES; i++) {
         value += amplitude * noise(st);
         st *= 2.;
@@ -45,5 +44,6 @@ void main() {
     color += fbm(st * 2.2 + vec2(time * 0.2, time * 0.2)) * vec3(0.5, 0.5, 2.5);
     color += fbm(st * 2.1 + vec2(time * 0.3, time * 0.1)) * vec3(0.5, 1.5, 0.5);
     color = mod(color * 12.0, 1.0) * 1.5;
-    gl_FragColor = vec4(color, 1.0);
+    vec4 fcolor = vec4(color, 1.0);
+    fragColor = TDOutputSwizzle(fcolor);
 }
