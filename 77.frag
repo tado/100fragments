@@ -1,7 +1,6 @@
-#version 120
-
 uniform float time;
 uniform vec2 resolution;
+out vec4 fragColor;
 
 void main() {
     vec2 p = gl_FragCoord.xy / resolution.x;
@@ -12,5 +11,5 @@ void main() {
     float r = cos(p.x + p.y);
     float g = sin(p.x + p.y);
     float b = (sin(p.x + p.y) + cos(p.x + p.y));
-    gl_FragColor = vec4(r, g, b, 1.);
+    fragColor = vec4(r, g, b, 1.);
 }

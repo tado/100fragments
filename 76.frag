@@ -1,7 +1,6 @@
-#version 120
-
 uniform float time;
 uniform vec2 resolution;
+out vec4 fragColor;
 
 vec2 rotate( vec2 matrix, float angle ) {
     return vec2( matrix.x*cos(radians(angle)), matrix.x*sin(radians(angle)) ) + vec2( matrix.y*-sin(radians(angle)), matrix.y*cos(radians(angle)) );
@@ -17,5 +16,5 @@ void main() {
     float g = (sin(xy.x * 110.0 + time * 120.0)) + (sin(xy.y * 19.0 + time * 40.0));
     float b = (sin(xy.x * 120.0 + time * 120.0)) + (sin(xy.y * 10.0 + time * 40.0));
     vec3 rgb = vec3(r, g, b);
-    gl_FragColor = vec4( rgb, 1.0 );
+    fragColor = vec4( rgb, 1.0 );
 }
