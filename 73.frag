@@ -15,5 +15,5 @@ void main(void) {
         float f3 = 1.0 / (500.0 * abs(mod((time * (i + 6.0) + rand(i * 30.0) * 10.0) * 0.12, 1.0) - uv.x + sin(uv.y * -2.5 + time * -44.0) * 0.1));
         color += f1 * vec3(0.1, 0.1, 1.5) + f2 * vec3(0.0, 1.0, 0.5) + f3 * vec3(1.0, 0.1, 0.1);
     }
-    fragColor = vec4(color, 1.0);
+    fragColor = TDOutputSwizzle(vec4(color, 1.0));
 }

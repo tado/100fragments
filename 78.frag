@@ -9,5 +9,5 @@ void main() {
         p.y += 0.1 / i * cos(i * 10.0 * p.x + time + sin((time / (12. * i)) * i));
     }
     float r = pow(abs(p.x + p.y), 1.2);
-    fragColor = vec4(r, r, r, 1.);
+    fragColor = TDOutputSwizzle(vec4(r, r, r, 1.));
 }

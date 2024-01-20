@@ -9,5 +9,5 @@ void main() {
     col.g = abs(sin(uv.x * 3.0 + time * -33.0 + cos(uv.y * 4.2 + time * 26.0) * 0.5));
     col.b = abs(sin(uv.x * 4.0 + time * 34.0 + cos(uv.y * 4.5 + time * 27.0) * 0.5));
 
-    fragColor = vec4(col, 1.0);
+    fragColor = TDOutputSwizzle(vec4(col, 1.0));
 }

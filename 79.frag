@@ -12,5 +12,5 @@ void main() {
         }
         col[j] = abs(p.x + p.y);
     }
-    fragColor = vec4(col, 1.0);
+    fragColor = TDOutputSwizzle(vec4(col, 1.0));
 }

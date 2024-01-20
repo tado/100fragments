@@ -16,5 +16,5 @@ void main() {
     float g = (sin(xy.x * 110.0 + time * 120.0)) + (sin(xy.y * 19.0 + time * 40.0));
     float b = (sin(xy.x * 120.0 + time * 120.0)) + (sin(xy.y * 10.0 + time * 40.0));
     vec3 rgb = vec3(r, g, b);
-    fragColor = vec4( rgb, 1.0 );
+    fragColor = TDOutputSwizzle(vec4( rgb, 1.0 ));
 }

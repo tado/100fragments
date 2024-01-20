@@ -16,5 +16,5 @@ void main() {
     float gy = sin(xy.y * 4.0 + time * 30.0);
     float gr = gx * gy;
     vec3 rgb = vec3(gr * 1.5);
-    fragColor = vec4( rgb, 1.0 );
+    fragColor = TDOutputSwizzle(vec4( rgb, 1.0 ));
 }

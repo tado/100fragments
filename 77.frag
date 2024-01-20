@@ -11,5 +11,5 @@ void main() {
     float r = cos(p.x + p.y);
     float g = sin(p.x + p.y);
     float b = (sin(p.x + p.y) + cos(p.x + p.y));
-    fragColor = vec4(r, g, b, 1.);
+    fragColor = TDOutputSwizzle(vec4(r, g, b, 1.));
 }
