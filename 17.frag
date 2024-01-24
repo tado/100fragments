@@ -10,6 +10,6 @@ void main() {
         vec2 pos = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
         t += (sin(i * 1.0) * 100.0) / length(m - pos) * 0.5;
     }
-    vec4 color = mod(vec4(t, t, t, 1.0) * vec4(0.2, 0.8, 0.6, 1.0) * 0.1, 1.5) * 0.5;
+    vec4 color = mod(vec4(t, t, t, 1.0) * vec4(0.2, 0.8, 0.6, 1.0) * 0.1, 1.5) * 0.75;
     fragColor = vec4(vec3(color.r, color.g, color.b), 1.0);
 }
