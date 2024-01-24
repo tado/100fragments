@@ -2,13 +2,14 @@ uniform float time;
 uniform vec2 resolution;
 out vec4 fragColor;
 
-float random(in vec2 st) {
-    return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
-}
-
-void main(void) {
-    float level = 1.5;
-    vec2 rand = vec2(time * 0.1, time * 0.2);
-    vec3 col = vec3(random(rand) * level, random(rand * 1.4) * level, random(rand * 2.0) * level);
-    fragColor = TDOutputSwizzle(vec4(col, 1.0));
+void main() {
+  vec2 st = gl_FragCoord.xy / resolution.xy;
+  st = st * 2. - 1.;
+  st.y *= resolution.y / resolution.x;
+  vec3 col = vec3(0.0);
+  col.r = length(abs(st) - sin(time) * 0.2);
+  col.g = length(abs(st) - sin(time * 1.1) * 0.3);
+  col.b = length(abs(st) - sin(time * 1.2) * 0.4);
+  col = mod(col * 20.0, 1.0);
+  fragColor = TDOutputSwizzle(vec4(col, 1.5));
 }

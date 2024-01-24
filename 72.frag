@@ -7,13 +7,12 @@ float rand(float n) {
 }
 
 void main(void) {
-    vec2 uv = gl_FragCoord.xy / resolution.xy;
-    vec3 color = vec3(0.0, 0.0, 0.0);
-    for(float i = 0.0; i < 10.0; i += 1.0) {
-        float f1 = 1.0 / (200.0 * abs(mod((time * (i + 2.0) + rand(i * 10.0) * 10.0) * -0.10, 1.0) - uv.x));
-        float f2 = 1.0 / (500.0 * abs(mod((time * (i + 2.0) + rand(i * 20.0) * 10.0) * 0.11, 1.0) - uv.x));
-        float f3 = 1.0 / (500.0 * abs(mod((time * (i + 2.0) + rand(i * 30.0) * 10.0) * 0.12, 1.0) - uv.x));
-        color += f1 * vec3(0.1, 0.1, 1.5) + f2 * vec3(0.0, 1.0, 0.5) + f3 * vec3(1.0, 0.1, 0.1);
-    }
-    fragColor = TDOutputSwizzle(vec4(color, 1.0));
+    vec2 st = gl_FragCoord.xy / resolution.xy;
+    vec2 uv = st;
+    float div = rand(time);
+    float speed = 10.0;
+    float r = mod(st.x + mod(time / div * speed, 1.0), 1.0 / div) * div;
+    float g = mod(st.y + mod(time / div * speed * 1.0, 1.0), 1.0 / div) * div;
+    float b = mod(st.x - mod(time / div * speed, 1.0), 1.0 / div) * div;
+    fragColor = TDOutputSwizzle(vec4(r, g, b, 1.0));
 }

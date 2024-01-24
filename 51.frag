@@ -2,41 +2,18 @@ uniform float time;
 uniform vec2 resolution;
 out vec4 fragColor;
 
-float random (in vec2 st) {
-    return fract(sin(dot(st.xy,
-                         vec2(12.9898,78.233)))
-                * 43758.5453123);
+float rand(float n) {
+    return fract(sin(n) * 43758.5453123);
 }
 
-float noise(vec2 st) {
-    vec2 i = floor(st);
-    vec2 f = fract(st);
-    vec2 u = f*f*(3.0-2.0*f);
-    return mix( mix( random( i + vec2(0.0,0.0) ),
-                     random( i + vec2(1.0,0.0) ), u.x),
-                mix( random( i + vec2(0.0,1.0) ),
-                     random( i + vec2(1.0,1.0) ), u.x), u.y);
-}
-
-mat2 rotate2d(float angle){
-    return mat2(cos(angle),-sin(angle),
-                sin(angle),cos(angle));
-}
-
-float lines(in vec2 pos, float b){
-    float scale = 10.0;
-    pos *= scale;
-    return smoothstep(0.0,
-                    .5+b*.5,
-                    abs((sin(pos.x*3.1415)+b*2.0))*.5);
-}
-
-void main() {
-    vec2 st = gl_FragCoord.xy/resolution.xy;
-    st.x *= resolution.x/resolution.y;
-    vec2 pos = st.xy*vec2(5.0,5.0);
-    pos = rotate2d(noise(pos + time * 1.0) * 2.0) * pos;
-    float pattern = lines(pos, 0.8);
-    vec4 color = vec4(vec3(pattern),1.0);
-    fragColor = TDOutputSwizzle(color);
+void main(void) {
+    vec2 uv = gl_FragCoord.xy / resolution.xy;
+    vec3 color = vec3(0.0, 0.0, 0.0);
+    for(float i = 0.0; i < 10.0; i += 1.0) {
+        float f1 = 1.0 / (200.0 * abs(mod((time * (i + 2.0) + rand(i * 10.0) * 10.0) * -0.10, 1.0) - uv.x));
+        float f2 = 1.0 / (500.0 * abs(mod((time * (i + 2.0) + rand(i * 20.0) * 10.0) * 0.11, 1.0) - uv.x));
+        float f3 = 1.0 / (500.0 * abs(mod((time * (i + 2.0) + rand(i * 30.0) * 10.0) * 0.12, 1.0) - uv.x));
+        color += f1 * vec3(0.1, 0.1, 1.5) + f2 * vec3(0.0, 1.0, 0.5) + f3 * vec3(1.0, 0.1, 0.1);
+    }
+    fragColor = TDOutputSwizzle(vec4(color, 1.0));
 }

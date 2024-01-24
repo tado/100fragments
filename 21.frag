@@ -4,9 +4,13 @@ out vec4 fragColor;
 
 void main(void){
     vec2 st = gl_FragCoord.xy / resolution.xy;
-    float r = mod(sin(st.x * 50.0 + time * 100.0) * 1.0, 1.9);
-    float g = mod(cos(st.y * 50.0 + time * 120.0) * 1.0, 1.2);
-    float b = mod(sin(st.x * 50.0 + time * -110.0) * 1.0, 1.2);
-    vec4 color = vec4(r, g, b, 1.0);
-    fragColor = TDOutputSwizzle(color);
+    st -= 0.5;
+    vec3 color = vec3(0.0, 0.0, 0.0);
+    for(float i = 0.0; i < 12.0; i++){
+        st.y += sin(st.x * 4.0 + time * 2.0 + i * 40.0) * 0.2 * cos(time + (i + 2.0) * 300.0);
+        color += (1.0 - vec3(pow(abs(st.y), 0.03)));
+    }
+    color = vec3(color.r * 2.0, color.g * 0.9, color.b * 0.0);
+    vec4 fcol = vec4(color, 1.0);
+    fragColor = TDOutputSwizzle(fcol);
 }

@@ -2,14 +2,12 @@ uniform float time;
 uniform vec2 resolution;
 out vec4 fragColor;
 
-void main() {
-    vec2 m;
-    float t = 0.0;
-    for (int i = 1 ; i < 10 ; i ++) {
-        m = vec2(sin(time * (i + 3.0f) * 1.0f) * 1.0f, cos(time * 1.02f + (i + 3.0f)) * 1.0f);
-        vec2 pos = (gl_FragCoord.xy * 2.0f - resolution) / min(resolution.x, resolution.y);
-        t += (sin(i * 1.0f) * 100.0f) / length(m - pos) * 0.5f;
-    }
-    vec4 color = mod(vec4(t, t, t, 1.0f) * vec4(0.2f, 0.8f, 0.6f, 1.0f) * 0.1f, 2.0f) * 0.5f;
-    fragColor = vec4(vec3(color.r, color.g, color.b), 1.0f);
+void main (void){
+    vec2 uv = vec2(0.5, 0.5 * (resolution.y / resolution.x)) - gl_FragCoord.xy / resolution.x;
+    float dist = sqrt(dot(uv, uv));
+    float radius = cos(time * 10.0) * 0.1 + 0.2;
+    float border = sin(time * 10.0) * 0.2 + 0.05;
+    float t = smoothstep(radius + border, radius - border, dist);
+    vec4 color = vec4(t * 2.0, t * 2.0, t * 0.5, 1.0);
+    fragColor = TDOutputSwizzle(color);
 }

@@ -2,15 +2,19 @@ uniform float time;
 uniform vec2 resolution;
 out vec4 fragColor;
 
-void main() {
-	vec2 p = gl_FragCoord.xy / resolution.xy * 3.0;
-	for(float i = 1.0; i < 10.0; i++) {
-		p.x += 0.3 / i * sin(i * 3.0 * p.y + time * 0.1 + cos((time / (100. * i)) * i));
-		p.y += 0.4 / i * cos(i * 3.0 * p.x + time * 2.1 + sin((time / (200. * i)) * i));
-	}
-	float r = cos(p.x + p.y + 2.) * .5 + .5;
-	float g = sin(p.x + p.y + 1.) * .5 + .5;
-	float b = (sin(p.x + p.y + 1.) + cos(p.x + p.y + 1.)) * .25 + .5;
-	vec4 color = vec4(r, g, b, 1);
-	fragColor = TDOutputSwizzle(color);
+#define TWO_PI 6.28318530718
+
+vec3 hsb2rgb(vec3 c){
+    vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+    vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+    return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+}
+
+void main(){
+    vec2 st = gl_FragCoord.xy / resolution.xy;
+    vec2 toCenter = vec2(0.5, 0.5)-st;
+    float angle = atan(toCenter.y, toCenter.x);
+    float radius = length(toCenter) * 2.0;
+    vec3 color = hsb2rgb(vec3((angle / TWO_PI)+mod(time * 0.2, 1.0), radius, 1.0));
+    fragColor = TDOutputSwizzle(vec4(color.r, color.g, color.b, 1.0));
 }

@@ -2,19 +2,15 @@ uniform float time;
 uniform vec2 resolution;
 out vec4 fragColor;
 
-vec2 rotate( vec2 matrix, float angle ) {
-    return vec2( matrix.x*cos(radians(angle)), matrix.x*sin(radians(angle)) ) + vec2( matrix.y*-sin(radians(angle)), matrix.y*cos(radians(angle)) );
-}
-
-void main() {
-    float scale  = min( resolution.x, resolution.y );
-    float width  = resolution.x / scale;
-    float height = resolution.y / scale;
-    vec2 xy = gl_FragCoord.xy / scale - vec2( width/2., height/2. );
-    xy = rotate( xy, time * 150. );
-    float gx = sin(xy.x * 120.0 + time * 20.0);
-    float gy = sin(xy.y * 4.0 + time * 30.0);
-    float gr = gx * gy;
-    vec3 rgb = vec3(gr * 1.5);
-    fragColor = TDOutputSwizzle(vec4( rgb, 1.0 ));
+void main(void) {
+    vec2 m;
+    vec3 t = vec3(0.0);
+    for (float i = 0.0 ; i < 60.0 ; i += 1.0) {
+        m = vec2(sin(time * sin(i + 3.0) * 4.0) * 1.0, cos(time * cos(i + 3.0) * 4.0) * 1.0);
+        vec2 pos = (gl_FragCoord.xy * 1.0 - resolution) / min(resolution.x, resolution.y);
+        t += vec3(sin(i * 2.0) / length(m - pos));
+    }
+    vec3 col = vec3(t);
+    vec4 color = vec4(col, 1.0);
+    fragColor = TDOutputSwizzle(color);
 }

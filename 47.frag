@@ -2,48 +2,33 @@ uniform float time;
 uniform vec2 resolution;
 out vec4 fragColor;
 
-float random (in vec2 st) {
-    return fract(sin(dot(st.xy,
-                         vec2(12.9898,78.233)))*
-        43758.5453123);
+vec4 mod289(vec4 x){return x - floor(x * (1.0 / 289.0)) * 289.0;}
+vec4 perm(vec4 x){return mod289(((x * 34.0) + 1.0) * x);}
+float noise(vec3 p){
+    vec3 a = floor(p);
+    vec3 d = p - a;
+    d = d * d * (3.0 - 2.0 * d);
+    vec4 b = a.xxyy + vec4(0.0, 1.0, 0.0, 1.0);
+    vec4 k1 = perm(b.xyxy);
+    vec4 k2 = perm(k1.xyxy + b.zzww);
+    vec4 c = k2 + a.zzzz;
+    vec4 k3 = perm(c);
+    vec4 k4 = perm(c + 1.0);
+    vec4 o1 = fract(k3 * (1.0 / 41.0));
+    vec4 o2 = fract(k4 * (1.0 / 41.0));
+    vec4 o3 = o2 * d.z + o1 * (1.0 - d.z);
+    vec2 o4 = o3.yw * d.x + o3.xz * (1.0 - d.x);
+    return o4.y * d.y + o4.x * (1.0 - d.y);
 }
 
-float noise (in vec2 st) {
-    vec2 i = floor(st);
-    vec2 f = fract(st);
-
-    // Four corners in 2D of a tile
-    float a = random(i);
-    float b = random(i + vec2(1.0, 0.0));
-    float c = random(i + vec2(0.0, 1.0));
-    float d = random(i + vec2(1.0, 1.0));
-    vec2 u = f * f * (3.0 - 2.0 * f);
-    return mix(a, b, u.x) +
-            (c - a)* u.y * (1.0 - u.x) +
-            (d - b) * u.x * u.y;
-}
-
-#define OCTAVES 4
-float fbm (in vec2 st) {
-    float value = 0.0;
-    float amplitude = 0.5;
-    float frequency = 0.0;
-    for (int i = 0; i < OCTAVES; i++) {
-        value += amplitude * noise(st);
-        st *= 2.;
-        amplitude *= .5;
-    }
-    return value;
-}
-
-void main() {
-    vec2 st = gl_FragCoord.xy/resolution.xy;
-    st.x *= resolution.x/resolution.y;
-    vec3 color = vec3(0.0);
-    color += fbm(st * 2.3 + vec2(time * 0.1, time * 0.3)) * vec3(2.0, 0.5, 0.5);
-    color += fbm(st * 2.2 + vec2(time * 0.2, time * 0.2)) * vec3(0.5, 0.5, 2.5);
-    color += fbm(st * 2.1 + vec2(time * 0.3, time * 0.1)) * vec3(0.5, 1.5, 0.5);
-    color = mod(color * 12.0, 1.0) * 1.5;
-    vec4 fcolor = vec4(color, 1.0);
-    fragColor = TDOutputSwizzle(fcolor);
+void main(void) {
+    vec2 st = gl_FragCoord.xy / resolution.xy;
+    vec2 pos = vec2(st) * vec2(100.0, 4.0);
+    float speed = 100.0;
+    float brightness = 1.2;
+    float r = noise(vec3(pos.x, pos.y, time * speed)) * brightness;
+    float g = noise(vec3(pos.x, pos.y + 0.2, time * speed + 200.0)) * brightness;
+    float b = noise(vec3(pos.x, pos.y + 0.4, time * speed + 800.0)) * brightness;
+    vec4 color = vec4(vec3(r, g, b), 1.0);
+    fragColor = TDOutputSwizzle(color);
 }
